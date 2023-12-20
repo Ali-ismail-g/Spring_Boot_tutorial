@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--    <bean id="init" class="com.BeanInitDestroy.config.DatabaseOperations" init-method="connectToDB"></bean>-->
+<!--    <bean id="destroy" class="com.BeanInitDestroy.config.DatabaseOperations" destroy-method="disconnectFromDB"></bean>-->
+    <bean id="init-destroy" class="com.BeanInitDestroy.config.DatabaseOperations" init-method="connectToDB" destroy-method="disconnectFromDB"></bean>
+
+    <!-- Load application properties -->
+    <context:property-placeholder location="classpath:application.properties" />
+    <!-- Define your database beans here -->
+    <bean id="databaseOperations" class="com.BeanInitDestroy.config.DatabaseOperations">
+        <property name="url" value="${database.url}"/>
+        <property name="username" value="${database.username}"/>
+        <property name="password" value="${database.password}"/>
+    </bean>
+    <!-- Define your beans here -->
+    <bean id="car"
+          class="com.BeanInitDestroy.Car">
+        <constructor-arg ref="databaseOperations" />
+    </bean>
+    <bean id="plane"
+          class="com.BeanInitDestroy.Plane">
+        <property name="databaseOperations" ref="databaseOperations" />
+    </bean>
+</beans>
+
+
+
+
+
