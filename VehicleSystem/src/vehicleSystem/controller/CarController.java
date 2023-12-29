@@ -21,9 +21,7 @@ public class CarController implements VehicleController{
     }
 
     @Override
-    public void saveVehicle(Vehicle vehicle) {
-        dataBaseOperations.save(vehicle);
-    }
+    public void saveVehicle(Vehicle vehicle) { dataBaseOperations.save(vehicle); }
 
     @Override
     public void getVehicleById(Vehicle vehicle) {

@@ -21,19 +21,19 @@ public class Main {
         Car car = context.getBean("car", vehicleSystem.models.Car.class);
         car.setBrand("AUDI");
         car.setType(Type.Car);
-        car.setId(1);
+        car.setId(2);
         CarController carController = context.getBean("carController", vehicleSystem.controller.CarController.class);
         //carController.saveVehicle(car);
         //carController.updateVehicle(car);
         //carController.deleteVehicle(car);
-        //carController.getVehicleById(car);
-        carController.getOrdersDetails();
+        carController.getVehicleById(car);
+        //carController.getOrdersDetails();
 
         System.out.println("---------plane bean -------------");
         Plane plane = context.getBean("plane", vehicleSystem.models.Plane.class);
-        plane.setType(Type.Plane);
-        plane.setBrand("J21");
-        plane.setId(4);
+        //plane.setType(Type.Plane);
+        //plane.setBrand("J21");
+        plane.setId(6);
         PlaneController planeController = context.getBean("planeController", vehicleSystem.controller.PlaneController.class);
         //planeController.saveVehicle(plane);
         planeController.getVehicleById(plane);
@@ -43,9 +43,9 @@ public class Main {
 
         System.out.println("---------bike bean -------------");
         Bike bike = context.getBean("bike", vehicleSystem.models.Bike.class);
-        bike.setType(Type.Bike);
-        bike.setBrand("chinese");
-        bike.setId(5);
+        //bike.setType(Type.Bike);
+        //bike.setBrand("chinese");
+        bike.setId(7);
         BikeController bikeController = context.getBean("bikeController", vehicleSystem.controller.BikeController.class);
         //bikeController.saveVehicle(bike);
         bikeController.getVehicleById(bike);
