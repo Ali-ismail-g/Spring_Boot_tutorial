@@ -6,7 +6,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import vehicleSystem.dao.DataBaseOperations;
 import vehicleSystem.models.Car;
+import vehicleSystem.models.Orders;
 import vehicleSystem.models.Vehicle;
+
+import java.util.ArrayList;
+
 @Component
 @Scope("prototype")
 public class CarController implements VehicleController{
@@ -17,10 +21,27 @@ public class CarController implements VehicleController{
     }
 
     @Override
-    public void saveToDatabase(Vehicle vehicle) {
+    public void saveVehicle(Vehicle vehicle) {
         dataBaseOperations.save(vehicle);
-        System.out.printf("Vehicle of type %s has been saved.. \n",vehicle );
     }
 
+    @Override
+    public void getVehicleById(Vehicle vehicle) {
+        dataBaseOperations.getVehicleById(vehicle);
+    }
 
+    @Override
+    public void updateVehicle(Vehicle vehicle) {
+        dataBaseOperations.update(vehicle);
+    }
+    @Override
+    public void deleteVehicle(Vehicle vehicle) {
+        dataBaseOperations.delete(vehicle);
+    }
+
+    @Override
+    public ArrayList<Orders> getOrdersDetails() {
+        ArrayList<Orders> orders = dataBaseOperations.getOrderDetails();
+        return orders;
+    }
 }

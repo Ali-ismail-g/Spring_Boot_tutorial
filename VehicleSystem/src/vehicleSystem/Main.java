@@ -19,32 +19,40 @@ public class Main {
 
         System.out.println("---------car bean -------------");
         Car car = context.getBean("car", vehicleSystem.models.Car.class);
-        car.setBrand("BMW");
+        car.setBrand("AUDI");
         car.setType(Type.Car);
         car.setId(1);
         CarController carController = context.getBean("carController", vehicleSystem.controller.CarController.class);
-        System.out.println("carController obj "+carController);
-        carController.saveToDatabase(car);
+        //carController.saveVehicle(car);
+        //carController.updateVehicle(car);
+        //carController.deleteVehicle(car);
+        //carController.getVehicleById(car);
+        carController.getOrdersDetails();
 
         System.out.println("---------plane bean -------------");
         Plane plane = context.getBean("plane", vehicleSystem.models.Plane.class);
-        plane.setBrand("F16");
         plane.setType(Type.Plane);
-        plane.setId(1);
+        plane.setBrand("J21");
+        plane.setId(4);
         PlaneController planeController = context.getBean("planeController", vehicleSystem.controller.PlaneController.class);
-        System.out.println("planeController obj "+planeController);
-        planeController.saveToDatabase(plane);
+        //planeController.saveVehicle(plane);
+        planeController.getVehicleById(plane);
+        //planeController.updateVehicle(plane);
+        //planeController.deleteVehicle(plane);
+
 
         System.out.println("---------bike bean -------------");
         Bike bike = context.getBean("bike", vehicleSystem.models.Bike.class);
-        bike.setBrand("Jaguar");
         bike.setType(Type.Bike);
-        bike.setId(1);
+        bike.setBrand("chinese");
+        bike.setId(5);
         BikeController bikeController = context.getBean("bikeController", vehicleSystem.controller.BikeController.class);
-        BikeController bikeController2 = context.getBean("bikeController", vehicleSystem.controller.BikeController.class);
-        System.out.println("bikeController obj "+bikeController);
-        System.out.println("bikeController obj2 "+bikeController2);
-        bikeController.saveToDatabase(bike);
+        //bikeController.saveVehicle(bike);
+        bikeController.getVehicleById(bike);
+        //bikeController.updateVehicle(bike);
+        //bikeController.deleteVehicle(bike);
+
+
 
 
         //((AnnotationConfigApplicationContext)context).close();
