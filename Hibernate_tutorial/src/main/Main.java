@@ -1,22 +1,19 @@
 package main;
 
-import main.com.myApp.controller.model.GuestModel;
-import main.com.myApp.controller.model.ProductModel;
-import main.com.myApp.controller.model.UserModel;
+import main.com.myApp.controller.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import javax.persistence.Query;
-import java.util.List;
-
+//@EntityScan("main.com.myApp.controller.model")
 public class Main
 {
     public static void main(String[] args) {
         // define the Session factory
         SessionFactory sessionFactory = new Configuration()
                 .configure("hibernate-config.xml")
-                .addAnnotatedClass(ProductModel.class)
+                .addAnnotatedClass(Person.class)
+                .addAnnotatedClass(Passport.class)
                 .buildSessionFactory();
 
         //define session
@@ -35,7 +32,7 @@ public class Main
 
             //retrieve object from database
             //GuestModel guest = session.get(GuestModel.class , 1);
-           // System.out.println(guest);
+            //System.out.println(guest);
 
             //update the object
             //guest.setEmail("aliesmaiil94@gmail.com");
@@ -47,9 +44,12 @@ public class Main
 
             //------------Products using ProductModel & HQL-------------------------------------------
             //Create Product object
+            //UserModel user = new UserModel("sherif","password",new Date());
             //ProductModel product = new ProductModel("samsung s23","mobile_phone",24500.0,4,"china","2023-08-04");
 
             //save object into table
+            //session.save(user);
+            //System.out.println(user);
             //session.save(product);
             //System.out.println(product);
 
@@ -64,11 +64,11 @@ public class Main
             //System.out.println(status);
 
             //aggregation function with query HQL
-            Query query = session.createQuery("select sum(price) from ProductModel");
+            //Query query = session.createQuery("select sum(price) from ProductModel");
 
             //excute query
-            List<Integer> priceResult = query.getResultList();
-            System.out.println("the total price of all products is:  "+priceResult.get(0));
+            //List<Integer> priceResult = query.getResultList();
+            //System.out.println("the total price of all products is:  "+priceResult.get(0));
 
             //get all products in a list with pagination
             //Query query = session.createQuery("from ProductModel");
@@ -82,6 +82,29 @@ public class Main
             //List<ProductModel> productList = query.getResultList();
             //for(Object product : productList)
                 //System.out.println(product);
+
+            //----------OneToOne Relation-------------------------------------
+            //Passport passport = new Passport("A340E39","2024-01-15");
+            //Person person = new Person("Ali","ismail","2024-01-02");
+
+            //passport.setPerson(person);
+
+            //save object into table
+            //session.save(passport);
+            //System.out.println(passport);
+            //System.out.println(person);
+
+            //retrieve object from database
+            //Passport passport1 = session.get(Passport.class , 1);
+            //System.out.println(passport1);
+            //System.out.println(passport1.getPerson());
+
+            Person person1 = session.get(Person.class,1);
+            System.out.println(person1.getFirst_name()+ "  " +person1.getLast_name());
+
+            //print the associated passport
+            Passport passport2 = person1.getPassport();
+            System.out.println(passport2);
 
             //commit the changes
             session.getTransaction().commit();
