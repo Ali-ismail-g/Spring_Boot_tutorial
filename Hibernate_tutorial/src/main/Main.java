@@ -5,6 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 //@EntityScan("main.com.myApp.controller.model")
 public class Main
 {
@@ -12,8 +17,8 @@ public class Main
         // define the Session factory
         SessionFactory sessionFactory = new Configuration()
                 .configure("hibernate-config.xml")
-                .addAnnotatedClass(Person.class)
-                .addAnnotatedClass(Passport.class)
+                .addAnnotatedClass(Instructor.class)
+                .addAnnotatedClass(Course.class)
                 .buildSessionFactory();
 
         //define session
@@ -99,12 +104,74 @@ public class Main
             //System.out.println(passport1);
             //System.out.println(passport1.getPerson());
 
-            Person person1 = session.get(Person.class,1);
-            System.out.println(person1.getFirst_name()+ "  " +person1.getLast_name());
+            //Person person1 = session.get(Person.class,1);
+            //System.out.println(person1.getFirst_name()+ "  " +person1.getLast_name());
 
             //print the associated passport
-            Passport passport2 = person1.getPassport();
-            System.out.println(passport2);
+            //Passport passport2 = person1.getPassport();
+            //System.out.println(passport2);
+
+            //----------OneToMany Relation uni direction-------------------------------------
+            //define Question object
+            //Question question = new Question("Question 1");
+
+            //define List of Answers
+            //List<Answer> answers = new ArrayList<>();
+            //add answers into the list
+            //Collections.addAll(answers,
+                    //new Answer("Question 1 first answer"),
+                    //new Answer("Question 1 second answer"),
+                    //new Answer("Question 1 third answer"));
+            //question.setAnswers(answers);
+
+            //save Question and its answers
+            //session.save(question);
+
+            //----------OneToMany Relation bi direction-------------------------------------
+            //define Instructor object
+            //Instructor instructor = new Instructor("Instructor Shohdy");
+            //define objects of Courses
+            //Course course1 = new Course("Course 1");
+            //Course course2 = new Course("Course 2");
+            //Course course3 = new Course("Course 3");
+
+            //instructor.addCourse(course1);
+            //instructor.addCourse(course2);
+            //instructor.addCourse(course3);
+
+            //save Instructor and its courses
+            //session.persist(instructor);
+
+            //get instructor object
+            int id = 1;
+            Instructor instructor = session.get(Instructor.class,id);
+            System.out.println(instructor);
+
+            //----------ManyToMany Relation-------------------------------------
+            //define courses objects
+            //Courses courses1 = new Courses("Math");
+            //Courses courses2 = new Courses("CS");
+
+
+            //define students objects
+            //Student student1 = new Student("Ali");
+            //Student student2 = new Student("Sherif");
+
+            //add students to courses
+            //courses1.addStudent(student1);
+            //courses2.addStudent(student1);
+            //courses2.addStudent(student2);
+
+            //save the courses
+            //session.persist(courses1);
+            //session.persist(courses2);
+
+            //get the student from the database
+            //Student tempStudent = session.get(Student.class,1);
+
+            //print the student data
+            //System.out.println("student data: "+tempStudent.getStudentName());
+            //System.out.println("courses related to student: "+tempStudent.getCourses());
 
             //commit the changes
             session.getTransaction().commit();

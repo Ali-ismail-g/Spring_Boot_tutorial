@@ -24,6 +24,9 @@
         <!-- Set the current session context -->
         <property name="current_session_context_class">thread</property>
 
+
+        <!-- Properties for creating table in DB -->
+        <!--<property name="hbm2ddl.auto">create</property>-->
     </session-factory>
 
 </hibernate-configuration>
