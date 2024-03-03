@@ -23,5 +23,4 @@ public interface ProductDAO {
     List<Product> search(String newName);
 
 
-
 }

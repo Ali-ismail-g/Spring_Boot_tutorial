@@ -50,7 +50,7 @@ public class ProductController {
     public ProductDetails getProductsDetailsByID(@RequestParam("productId") int id)
     {
         List<Product> products=productService.getAllProducts();
-        if(id < 0 || id>products.size()){
+        if(id < 0 ){
             throw new ProductNotFoundException("product is not found at "+id+" !!");
         }
         Product product = productService.findById(id);
@@ -70,29 +70,7 @@ public class ProductController {
         return  productService.getAllProducts();
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ProductErrorResponse> handleException(ProductNotFoundException exception){
 
-        ProductErrorResponse error = new ProductErrorResponse();
-
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setMessage(exception.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-
-        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ProductErrorResponse> handleException(Exception exception){
-
-        ProductErrorResponse error = new ProductErrorResponse();
-
-        error.setStatus(HttpStatus.BAD_REQUEST.value()); //400 error code to handle if client entered string instead of int for id in params which cause mismatch
-        error.setMessage(exception.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-
-        return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
-    }
 
 //---------------------------------------------------------------------------
 // get all products to show in showpage

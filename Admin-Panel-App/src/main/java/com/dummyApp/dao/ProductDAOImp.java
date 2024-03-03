@@ -75,10 +75,14 @@ public class ProductDAOImp  implements ProductDAO{
         try {
             // define hql
             Query query = getSession().createQuery("delete from Product  where id=:id");
+            Query query2 = getSession().createQuery("delete from ProductDetails  where id=:id");
             // set id by parameter id
             query.setParameter("id", id);
+            query2.setParameter("id", id);
             // execute query
             query.executeUpdate();
+            query.executeUpdate();
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -132,7 +136,6 @@ public class ProductDAOImp  implements ProductDAO{
 
         return products;
     }
-
 
     // define session factory to get session
     public Session getSession() {

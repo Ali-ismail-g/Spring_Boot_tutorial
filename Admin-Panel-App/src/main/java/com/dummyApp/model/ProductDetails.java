@@ -1,6 +1,7 @@
 package com.dummyApp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,5 +54,22 @@ public class ProductDetails {
 
     public ProductDetails(int id) {
         this.id = id;
+    }
+
+    public ProductDetails(String name, Date expirationDate, String manufacturer, Double price, Boolean available) {
+        this.name = name;
+        this.expirationDate = expirationDate;
+        this.manufacturer = manufacturer;
+        this.price = price;
+        this.available = available;
+    }
+
+    public ProductDetails(int id, String name, Date expirationDate, String manufacturer, Double price, Boolean available) {
+        this.id = id;
+        this.name = name;
+        this.expirationDate = expirationDate;
+        this.manufacturer = manufacturer;
+        this.price = price;
+        this.available = available;
     }
 }

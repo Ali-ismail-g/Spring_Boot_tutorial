@@ -28,7 +28,7 @@ public class Product {
     private String name;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_detail_id")
      private ProductDetails productDetails;
 
