@@ -1,4 +1,4 @@
-package com.jwtAuth.security.model.request;
+package com.todoService.todoService.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
-    private String accessToken;
+public class UserDetailsResponse {
+    private int id;
 }

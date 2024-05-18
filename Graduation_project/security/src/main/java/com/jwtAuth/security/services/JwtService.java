@@ -1,9 +1,12 @@
 package com.jwtAuth.security.services;
 
 import com.jwtAuth.security.entity.User;
+import com.jwtAuth.security.model.response.UserDetailsResponse;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
@@ -15,12 +18,13 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class JwtService {
+
     private final String secret_key="mySecretKey";
     private long accessTokenValidity = 30*60*1000; //valid till 30 mins
 
     private final JwtParser jwtParser;
 
-    public JwtService() {
+    public JwtService(UserDetailsService userDetailsService) {
         this.jwtParser = Jwts.parser().setSigningKey(secret_key);
     }
     private final String TOKEN_HEADER = "Authorization";
@@ -28,15 +32,17 @@ public class JwtService {
 
     public String createToken(User user,Map<String,Object> extraClaims){
         //Map<String,String> extraClaims = new HashMap<>();
-//        Claims claims = Jwts.claims();
-//        claims.put("firstName",user.getFirstName());
-//        claims.put("lastName",user.getLastName());
+        Claims claims = Jwts.claims();
+        claims.put("firstName",user.getFirstName());
+        claims.put("lastName",user.getLastName());
+        claims.put("id",user.getId());
+        claims.put("role",user.getRole());
 //        Date tokenCreateTime = new Date();
 //        Date tokenValidity = new Date(tokenCreateTime.getTime()+ TimeUnit.MINUTES.toMillis(accessTokenValidity));
         Date tokenValidity = new Date(System.currentTimeMillis()+accessTokenValidity);
         Date issuedtime = new Date(System.currentTimeMillis());
         return Jwts.builder()
-                .setClaims(extraClaims)
+                .setClaims(claims)
                 .setSubject(user.getEmail())
                 .setExpiration(tokenValidity)
                 .setIssuedAt(issuedtime)
@@ -44,7 +50,7 @@ public class JwtService {
                 .compact();
     }
 
-    private Claims parseJwtClaims(String token){return jwtParser.parseClaimsJws(token).getBody();}
+    public Claims parseJwtClaims(String token){return jwtParser.parseClaimsJws(token).getBody();}
 
     public Claims resolveClaims(HttpServletRequest req){
         try {
@@ -86,8 +92,14 @@ public class JwtService {
         return username.equals(claims.getSubject())&&!isTokenExpired(claims.getExpiration());
     }
 
-    public String getEmail(Claims claims){return claims.getSubject();}
-
-    private List<String> getRoles(Claims claims){return (List<String>) claims.get("roles"); }
+    public String extractToken(String token){
+        return token.substring(TOKEN_PREFIX.length());
+    }
+    public Claims getUserInfo(String token){
+        String bearerToken = extractToken(token);
+        System.out.println("BearerToken in jwtService:  "+bearerToken);
+        Claims claims = parseJwtClaims(bearerToken);
+        return claims;
+    }
 
 }
