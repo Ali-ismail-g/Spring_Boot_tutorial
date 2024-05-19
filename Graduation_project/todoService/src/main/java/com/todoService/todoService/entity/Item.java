@@ -24,7 +24,7 @@ public class Item {
     private String title;
 
     @Column(name = "user_id")
-    private int user_id;
+    private String user_id;
 
     @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)

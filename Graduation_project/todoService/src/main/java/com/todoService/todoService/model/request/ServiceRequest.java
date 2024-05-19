@@ -1,4 +1,4 @@
-package com.todoService.todoService.model.response;
+package com.todoService.todoService.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetailsResponse {
-    private String id;
+public class ServiceRequest {
+    private String apiUrl;
+    private String jwtToken;
 }
