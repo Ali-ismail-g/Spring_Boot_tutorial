@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class RestTemplateInterceptor implements ClientHttpRequestInterceptor {
     private final String jwtToken;
+    public static final String REQUEST_HEADER_NAME = "Authorization";
 
     public RestTemplateInterceptor(String jwtToken) {
         this.jwtToken = jwtToken;
@@ -20,7 +21,7 @@ public class RestTemplateInterceptor implements ClientHttpRequestInterceptor {
 //        String token = RequestContext.getContext().getToken();
 //        request.getHeaders().add(RequestContext.REQUEST_HEADER_NAME,token);
         HttpHeaders headers = request.getHeaders();
-        headers.add(RequestContext.REQUEST_HEADER_NAME,"Bearer "+jwtToken);
+        headers.add(REQUEST_HEADER_NAME,"Bearer "+jwtToken);
         return execution.execute(request, body);
     }
 }
