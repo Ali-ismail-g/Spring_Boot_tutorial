@@ -37,6 +37,12 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "OTP")
+    private String OTP;
+
+    @Column(name = "enable")
+    private boolean enable;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Token> tokens;
 

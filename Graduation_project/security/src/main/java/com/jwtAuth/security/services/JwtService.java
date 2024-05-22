@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -31,18 +28,18 @@ public class JwtService {
     private final String TOKEN_PREFIX = "Bearer ";
 
     public String createToken(User user,Map<String,Object> extraClaims){
-        //Map<String,String> extraClaims = new HashMap<>();
-        Claims claims = Jwts.claims();
-        claims.put("firstName",user.getFirstName());
-        claims.put("lastName",user.getLastName());
-        claims.put("id",user.getId());
-        claims.put("role",user.getRole());
+       // Map<String,String> claims = new HashMap<>();
+        //Claims claims = Jwts.claims();
+        extraClaims.put("firstName",user.getFirstName());
+        extraClaims.put("lastName",user.getLastName());
+        extraClaims.put("id", user.getId());
+        extraClaims.put("role", user.getRole());
 //        Date tokenCreateTime = new Date();
 //        Date tokenValidity = new Date(tokenCreateTime.getTime()+ TimeUnit.MINUTES.toMillis(accessTokenValidity));
         Date tokenValidity = new Date(System.currentTimeMillis()+accessTokenValidity);
         Date issuedtime = new Date(System.currentTimeMillis());
         return Jwts.builder()
-                .setClaims(claims)
+                .setClaims(extraClaims)
                 .setSubject(user.getEmail())
                 .setExpiration(tokenValidity)
                 .setIssuedAt(issuedtime)
@@ -100,6 +97,11 @@ public class JwtService {
         System.out.println("BearerToken in jwtService:  "+bearerToken);
         Claims claims = parseJwtClaims(bearerToken);
         return claims;
+    }
+
+    public String generateOTP(){
+        Random random = new Random();
+        return String.format("%04d",random.nextInt(10000));
     }
 
 }

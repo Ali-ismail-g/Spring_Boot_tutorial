@@ -47,6 +47,8 @@ public class AuthService {
                 .email(registerRequest.getEmail())
                 .password(bCryptPasswordEncoder.encode(registerRequest.getPassword()))
                 .role(registerRequest.getRole())
+                .enable(false)
+                .OTP(jwtService.generateOTP())
                 .build();
         User savedUser = userRepository.save(user);
         Map<String,Object> extraClaims = new HashMap<>();
