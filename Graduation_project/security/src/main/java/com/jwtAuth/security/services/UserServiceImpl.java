@@ -77,21 +77,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String sendOTPByEmail(String token) {
+    public String sendOTPByEmail(String token,UserRequest userRequest) {
         Map<String,Object> userInfo = jwtService.getUserInfo(token);
         Object myId = userInfo.get("id");
         int id = ((Number)myId).intValue();
         User myUser = userRepository.findById(id).get();
         String email = myUser.getEmail();
         System.out.println("email in db "+email);
-        if(email == null){
+        String emailReq = userRequest.getEmail();
+        if(!email.equals(emailReq)){
             throw new RuntimeException("email is not registered!!");
         }
         String otpCode = myUser.getOTP();
         System.out.println("otp in user service: "+otpCode);
         String subject = "sending OTP for changing password";
         String body = "Hello, here's the generated OTP:   "+otpCode;
-        emailSenderService.sendEmail(email,subject,body);
+        emailSenderService.sendEmail(emailReq,subject,body);
         return "Check your email for OTP!!";
     }
 
@@ -103,12 +104,12 @@ public class UserServiceImpl implements UserService {
         User myUser = userRepository.findById(id).get();
         System.out.println("otp from user: "+myUser.getOTP());
         System.out.println("otp from body: "+changePasswordRequest.getOtpCode());
-//        if(myUser.getOTP() != changePasswordRequest.getOtpCode()){
-//            throw new RuntimeException("otp is not correct!!");
-//        }
-//        if(myUser.getEmail() != changePasswordRequest.getEmail()){
-//            throw new RuntimeException("email is not registered!!");
-//        }
+        if(!myUser.getOTP().equals(changePasswordRequest.getOtpCode())){
+            throw new RuntimeException("otp is not correct!!");
+        }
+        if(!myUser.getEmail().equals(changePasswordRequest.getEmail())){
+            throw new RuntimeException("email is not registered!!");
+        }
         myUser.setPassword(bCryptPasswordEncoder.encode(changePasswordRequest.getPassword()));
         userRepository.save(myUser);
         return "password is changed successfully!!";

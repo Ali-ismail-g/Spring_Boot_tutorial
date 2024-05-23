@@ -14,6 +14,6 @@ public interface UserService {
     public User getUserById(String token);
     public String activateUser(String token, UserRequest userRequest) throws AuthenticationException;
     public String updateUserInfo(String token, RegisterRequest registerRequest) throws AuthenticationException;
-    public String sendOTPByEmail(String token);
+    public String sendOTPByEmail(String token,UserRequest userRequest);
     public String changePassword(String token, ChangePasswordRequest changePasswordRequest);
 }

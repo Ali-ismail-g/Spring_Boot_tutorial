@@ -74,8 +74,8 @@ public class AuthController {
         return ResponseEntity.ok(userService.updateUserInfo(bearerToken,registerRequest));
     }
     @PostMapping(value = "/genOTP")
-    public ResponseEntity<String> sendOTPByEmail(@RequestHeader("Authorization") String bearerToken){
-        return ResponseEntity.ok(userService.sendOTPByEmail(bearerToken));
+    public ResponseEntity<String> sendOTPByEmail(@RequestHeader("Authorization") String bearerToken,@RequestBody UserRequest userRequest){
+        return ResponseEntity.ok(userService.sendOTPByEmail(bearerToken,userRequest));
     }
 
     @PostMapping(value = "/newPass")
