@@ -38,4 +38,12 @@ public class ItemDetails {
     @JsonIgnore
     @OneToOne(mappedBy = "itemDetails",cascade = CascadeType.ALL)
     private Item item;
+
+
+    public ItemDetails(String description, Date created_at, Priority priority, Status status) {
+        this.description = description;
+        this.created_at = created_at;
+        this.priority = priority;
+        this.status = status;
+    }
 }

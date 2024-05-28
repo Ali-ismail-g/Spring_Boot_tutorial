@@ -30,4 +30,9 @@ public class Item {
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "item_details_id")
     private ItemDetails itemDetails;
+
+    public Item(String title, String user_id) {
+        this.title = title;
+        this.user_id = user_id;
+    }
 }

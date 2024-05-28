@@ -26,7 +26,7 @@ public class ItemController {
     @Autowired
     private Config config;
 
-    @PostMapping(value ="/add")
+    @PostMapping(value ="")
     public ResponseEntity<ItemDetails> addNewItem(@RequestBody ItemDetailsRequest itemDetailsRequest,@RequestHeader("Authorization")String token){
         ItemDetails itemDetails = itemDetailsRequest.getItemDetails();
         Item item = itemDetailsRequest.getItem();
@@ -34,13 +34,13 @@ public class ItemController {
         ServiceRequest serviceRequest = new ServiceRequest(config.authServiceUrl,accessToken);
         return ResponseEntity.ok(itemService.save(itemDetails,item,serviceRequest));
     }
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public ResponseEntity<Optional<ItemDetails>> getItem(@RequestParam("itemId") int id,@RequestHeader("Authorization")String token){
         String accessToken = itemServiceImpl.extractToken(token);
         ServiceRequest serviceRequest = new ServiceRequest(config.authServiceUrl,accessToken);
         return ResponseEntity.ok(itemService.findById(id,serviceRequest));
     }
-    @PutMapping(value = "/update")
+    @PutMapping(value = "")
     public ResponseEntity<ItemDetails> updateItem(@RequestBody ItemDetailsRequest itemDetailsRequest,@RequestHeader("Authorization")String token){
         ItemDetails itemDetails = itemDetailsRequest.getItemDetails();
         Item item = itemDetailsRequest.getItem();
@@ -48,7 +48,7 @@ public class ItemController {
         ServiceRequest serviceRequest = new ServiceRequest(config.authServiceUrl,accessToken);
         return ResponseEntity.ok(itemService.update(itemDetails,item,serviceRequest));
     }
-    @DeleteMapping(value = "/delete")
+    @DeleteMapping(value = "")
     public ResponseEntity<String> deleteItem(@RequestParam("itemId") int id,@RequestHeader("Authorization")String token){
         String accessToken = itemServiceImpl.extractToken(token);
         ServiceRequest serviceRequest = new ServiceRequest(config.authServiceUrl,accessToken);

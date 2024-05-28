@@ -1,5 +1,7 @@
 package com.todoService.todoService.services;
 
+import com.todoService.todoService.Util.ItemNotFoundException;
+import com.todoService.todoService.Util.UserNotFoundException;
 import com.todoService.todoService.config.RestTemplateInterceptor;
 import com.todoService.todoService.entity.Item;
 import com.todoService.todoService.entity.ItemDetails;
@@ -21,19 +23,20 @@ import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService{
-    private String authServiceUrl="http://localhost:8080/rest/auth/details";
     @Autowired
     private ItemRepository itemRepository;
 
     @Autowired
     private ItemDetailsRepository itemDetailsRepository;
+    private String authServiceUrl="http://localhost:8080/rest/auth/details";
+    private RestTemplate restTemplate = new RestTemplate();
     private final String TOKEN_PREFIX = "Bearer ";
 
-    private RestTemplate restTemplate = new RestTemplate();
 
     public String extractToken(String token){
         return token.substring(TOKEN_PREFIX.length());
     }
+
     public String getUserId(ServiceRequest serviceRequest){
     try {
         //restTemplate.getInterceptors().add(new RestTemplateInterceptor(jwtToken));
@@ -43,6 +46,9 @@ public class ItemServiceImpl implements ItemService{
         HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
 
         ResponseEntity<UserDetailsResponse> response = restTemplate.exchange(serviceRequest.getApiUrl(),HttpMethod.GET,entity, UserDetailsResponse.class);
+        if(response == null){
+            throw new UserNotFoundException("user is not found!!");
+        }
         System.out.println("res "+response);
         UserDetailsResponse userDetailsResponse = response.getBody();
         String id =userDetailsResponse.getId();
@@ -58,11 +64,14 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public ItemDetails save(ItemDetails itemDetails, Item item, ServiceRequest serviceRequest) {
         String id = getUserId(serviceRequest);
+        if(id==null){
+            throw new UserNotFoundException("user is not found!!");
+        }
         if (itemDetails == null) {
-            throw new IllegalArgumentException("ItemDetails must not be null");
+            throw new ItemNotFoundException("ItemDetails must not be null");
         }
         if (item == null) {
-            throw new IllegalArgumentException("Item must not be null");
+            throw new ItemNotFoundException("Item must not be null");
         }
         item.setUser_id(id);
         itemDetailsRepository.save(itemDetails);
@@ -76,9 +85,12 @@ public class ItemServiceImpl implements ItemService{
     public Optional<ItemDetails> findById(int id,ServiceRequest serviceRequest) {
         String user_id = getUserId(serviceRequest);
         if(user_id == null || user_id == "0"){
-            throw new RuntimeException("user is not exist!!");
+            throw new UserNotFoundException("user is not found!!");
         }
         Optional<ItemDetails> itemDetails = itemDetailsRepository.findById(id);
+        if(itemDetails==null){
+            throw new ItemNotFoundException("Item must not be null");
+        }
         return itemDetails;
     }
 
@@ -86,7 +98,7 @@ public class ItemServiceImpl implements ItemService{
     public String deleteById(int id,ServiceRequest serviceRequest) {
         String user_id = getUserId(serviceRequest);
         if(user_id == null || user_id == "0"){
-            throw new RuntimeException("user does not exist!!");
+            throw new UserNotFoundException("user is not found!!");
         }
         itemDetailsRepository.deleteById(id);
         //itemRepository.deleteById(id);
@@ -97,7 +109,7 @@ public class ItemServiceImpl implements ItemService{
     public ItemDetails update(ItemDetails itemDetails,Item item,ServiceRequest serviceRequest) {
         String id = getUserId(serviceRequest);
         if(id == null || id == "0"){
-            throw new RuntimeException("user does not exist!!");
+            throw new UserNotFoundException("user is not found!!");
         }
         itemDetails.setId(itemDetails.getId());
         itemDetails.setStatus(itemDetails.getStatus());
