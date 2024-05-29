@@ -1,0 +1,11 @@
+**Simple Microservices App**
+----------------------------
+Both Apps must be running simultaneously
+Install Sql Script and execute both files for user and items.
+Import Postman collections and run all APIs.
+
+
+**Note for Testing**
+--------------------
+In Security service when you run test for creating new user you must use these credentials(Email,Password) in @BeforeEach void method as it will login and generate JWT before any Test.
+You must use both(Email,Password) in todo service and make sure you use the right id of item you run test for getItem,updateItem and deleteItem.
