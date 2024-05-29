@@ -31,7 +31,7 @@ class TodoServiceApplicationTests {
 	@BeforeEach
 	public void obtainJwtToken(){
 		 String loginUrl = "http://localhost:8080/rest/auth/login";
-		 HttpEntity<LoginRequest> entity = new HttpEntity<>(new LoginRequest("aliesmaiil94@gmail.com","111111"));
+		 HttpEntity<LoginRequest> entity = new HttpEntity<>(new LoginRequest("aliesmaiil94@gmail.com","555555"));
 		 ResponseEntity<AuthenticationResponse> response = restTemplate.postForEntity(loginUrl,entity, AuthenticationResponse.class);
 		 jwtToken = response.getBody().getAccessToken();
 	}
@@ -48,14 +48,14 @@ class TodoServiceApplicationTests {
 
 	@Test
 	public void addItem() throws ParseException {
-		RestTemplate restTemplate = new RestTemplate();
+//		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization","Bearer "+jwtToken);
 //		HttpEntity<Void> headersRequest = new HttpEntity<>(headers);
 		String url="http://localhost:8082/rest/item";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		ItemDetails itemDetails = new ItemDetails("Going to the school", simpleDateFormat.parse("2024-11-23"), Priority.high, Status.completed);
-		Item item = new Item("studying with friends", "1");
+		Item item = new Item("studying with friends", "7");
 		ItemDetailsRequest itemDetailsRequest = new ItemDetailsRequest(itemDetails, item);
 		HttpEntity<ItemDetailsRequest> postRequest = new HttpEntity<>(itemDetailsRequest, headers);
 		try {
@@ -71,14 +71,14 @@ class TodoServiceApplicationTests {
 
 	@Test
 	public void updateItem() throws ParseException {
-		RestTemplate restTemplate = new RestTemplate();
+//		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization","Bearer "+jwtToken);
 //		HttpEntity<Void> headersRequest = new HttpEntity<>(headers);
 		String url="http://localhost:8082/rest/item";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		ItemDetails itemDetails = new ItemDetails("Going to the club", simpleDateFormat.parse("2024-11-23"), Priority.low, Status.not_completed);
-		Item item = new Item("meeting my friends", "1");
+		Item item = new Item("meeting my friends", "7");
 		ItemDetailsRequest itemDetailsRequest = new ItemDetailsRequest(itemDetails, item);
 		HttpEntity<ItemDetailsRequest> postRequest = new HttpEntity<>(itemDetailsRequest, headers);
 		try {
@@ -93,7 +93,7 @@ class TodoServiceApplicationTests {
 	}
 	@Test
 	public void deleteItem(){
-		RestTemplate restTemplate = new RestTemplate();
+//		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization","Bearer "+jwtToken);
 		HttpEntity<Void> headersRequest = new HttpEntity<>(headers);

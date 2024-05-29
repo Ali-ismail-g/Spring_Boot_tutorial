@@ -13,4 +13,8 @@ public class UserRequest {
     private int id;
     private String email;
     private String otpCode;
+
+    public UserRequest(String email) {
+        this.email = email;
+    }
 }

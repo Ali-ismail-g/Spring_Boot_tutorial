@@ -1,5 +1,7 @@
 package com.jwtAuth.security.services;
 
+import com.jwtAuth.security.Util.UserNotFoundException;
+import com.jwtAuth.security.Util.UserRegisteredException;
 import com.jwtAuth.security.entity.Token;
 import com.jwtAuth.security.entity.TokenType;
 import com.jwtAuth.security.entity.User;
@@ -33,14 +35,21 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
 
     public AuthenticationResponse login(LoginRequest loginRequest){
+        System.out.println("loginReq "+loginRequest);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword()));
         User user = userRepository.findUserByEmail(loginRequest.getEmail());
+        //System.out.println("user "+user);
         Map<String,Object> extraClaims = new HashMap<>();
         String jwtToken = jwtService.createToken(user,extraClaims);
+        System.out.println("jwt "+jwtToken);
         saveUserToken(user,jwtToken);
         return new AuthenticationResponse(jwtToken,loginRequest.getEmail());
     }
     public AuthenticationResponse register(RegisterRequest registerRequest){
+        User oldUser = userRepository.findUserByEmail(registerRequest.getEmail());
+        if(oldUser != null){
+            throw new UserRegisteredException("User is already registered in database..change this email!!");
+        }
         User user = User.builder()
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())

@@ -1,5 +1,8 @@
 package com.jwtAuth.security.services;
 
+import com.jwtAuth.security.Util.EmailNotFoundException;
+import com.jwtAuth.security.Util.OTPNotFoundException;
+import com.jwtAuth.security.Util.UserNotFoundException;
 import com.jwtAuth.security.entity.User;
 import com.jwtAuth.security.model.request.ChangePasswordRequest;
 import com.jwtAuth.security.model.request.RegisterRequest;
@@ -35,6 +38,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(String token) {
         Map<String,Object> userInfo = jwtService.getUserInfo(token);
+        if(userInfo == null){
+            throw new UserNotFoundException("user not found!!");
+        }
         Object myId = userInfo.get("id");
         int id = ((Number)myId).intValue();
         User user = userRepository.findById(id).get();
@@ -45,6 +51,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public String activateUser(String token, UserRequest userRequest) throws AuthenticationException {
         String email = userRequest.getEmail();
+        if(email == null){
+            throw new EmailNotFoundException("user not found!!");
+        }
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         Boolean tokenValid = jwtService.isTokenValid(token,userDetails);
         if(!tokenValid){
@@ -60,12 +69,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public String updateUserInfo( String token, RegisterRequest registerRequest) throws AuthenticationException {
         Map<String,Object> userInfo = jwtService.getUserInfo(token);
+        if(userInfo == null){
+            throw new UserNotFoundException("user not found!!");
+        }
         Object myId = userInfo.get("id");
         int id = ((Number)myId).intValue();
         User myUser = userRepository.findById(id).get();
         System.out.println("user id: "+myUser.getId());
         if (myUser==null){
-            throw new RuntimeException("user is not found!!");
+            throw new UserNotFoundException("user not found!!");
         }
         System.out.println("registerRequest.getFirstName()"+registerRequest.getFirstName());
         myUser.setFirstName(registerRequest.getFirstName());
@@ -86,7 +98,7 @@ public class UserServiceImpl implements UserService {
         System.out.println("email in db "+email);
         String emailReq = userRequest.getEmail();
         if(!email.equals(emailReq)){
-            throw new RuntimeException("email is not registered!!");
+            throw new EmailNotFoundException("email is not registered!!");
         }
         String otpCode = myUser.getOTP();
         System.out.println("otp in user service: "+otpCode);
@@ -105,10 +117,10 @@ public class UserServiceImpl implements UserService {
         System.out.println("otp from user: "+myUser.getOTP());
         System.out.println("otp from body: "+changePasswordRequest.getOtpCode());
         if(!myUser.getOTP().equals(changePasswordRequest.getOtpCode())){
-            throw new RuntimeException("otp is not correct!!");
+            throw new OTPNotFoundException("otp is not correct!!");
         }
         if(!myUser.getEmail().equals(changePasswordRequest.getEmail())){
-            throw new RuntimeException("email is not registered!!");
+            throw new EmailNotFoundException("email is not registered!!");
         }
         myUser.setPassword(bCryptPasswordEncoder.encode(changePasswordRequest.getPassword()));
         userRepository.save(myUser);

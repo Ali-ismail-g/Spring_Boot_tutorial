@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "c9de54a3-cb2a-4014-8cbe-d7ed3fa67b51",
+		"name": "microservice project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10903305"
+	},
+	"item": [
+		{
+			"name": "Register new user",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"ali\",\r\n    \"lastName\":\"ismail\",\r\n    \"email\":\"aliesmaiil94@gmail.com\",\r\n    \"password\":\"99999\",\r\n    \"role\":\"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"register"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"aliesmaiil94@gmail.com\",\r\n    \"password\":\"555555\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user details from token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImdoYXJlZWIiLCJzdWIiOiJhbGkuZ2hhcmVlYkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpZCI6MSwiZXhwIjoxNzE2Mzk0MzUzLCJpYXQiOjE3MTYzOTI1NTN9.cZ3iytw_Foz3VgV4ewqwWzbvw1IduXGo7E7LRMwDhHY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/details",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"details"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "aliesmaiil94@gmail.com",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check token validity",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImVzbWFpaWwiLCJzdWIiOiJhbGllc21haWlsOTRAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MSwiZXhwIjoxNzE2NDA5Nzk4LCJpYXQiOjE3MTY0MDc5OTh9.WIn8NT3xPiBEOIzVIr9RdEDk67wPOeksa0DQ8aBrJpU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/valid?email=aliesmaiil94@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"valid"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "aliesmaiil94@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activate user ",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbGkiLCJsYXN0TmFtZSI6ImlzbWFpbCIsImlkIjoxLCJyb2xlIjoidXNlciIsInN1YiI6ImFsaWVzbWFpaWw5NEBnbWFpbC5jb20iLCJleHAiOjE3MTYzNjgwMTgsImlhdCI6MTcxNjM2NjIxOH0.mD6QB3Sl8JKPseOghR2IN1NfostwSxvgiROX55rJKzk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"aliesmaiil94@gmail.com\",\r\n    \"otpCode\":\"9944\",\r\n    \"id\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/activate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"activate"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user details using ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImdoYXJlZWIiLCJzdWIiOiJhbGkuZ2hhcmVlYkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpZCI6MSwiZXhwIjoxNzE2Mzk0MzUzLCJpYXQiOjE3MTYzOTI1NTN9.cZ3iytw_Foz3VgV4ewqwWzbvw1IduXGo7E7LRMwDhHY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user info",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImdoYXJlZWIiLCJzdWIiOiJhbGkuZ2hhcmVlYkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpZCI6MSwiZXhwIjoxNzE2NDA4MTkyLCJpYXQiOjE3MTY0MDYzOTJ9.yIuQo98-un3fU1Kn3dg8RTx3jkmOhTPg_zVQhnl4z1c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"aly\",\r\n    \"lastName\":\"esmaiil\",\r\n    \"email\":\"aliesmaiil94@gmail.com\",\r\n    \"role\":\"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send an email with OTP",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImVzbWFpaWwiLCJzdWIiOiJhbGllc21haWlsOTRAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MSwiZXhwIjoxNzE2NDM4MDM2LCJpYXQiOjE3MTY0MzYyMzZ9.u9m-AICd6crQES9b4MkTWSkVDu0bApOfPWTAhedHV2E",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"aliesmaiil94@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/genOTP",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"genOTP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update password with OTP",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImVzbWFpaWwiLCJzdWIiOiJhbGllc21haWlsOTRAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MSwiZXhwIjoxNzE2NDM4MDM2LCJpYXQiOjE3MTY0MzYyMzZ9.u9m-AICd6crQES9b4MkTWSkVDu0bApOfPWTAhedHV2E",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"aliesmaiil94@gmail.com\",\r\n    \"otpCode\":\"9944\",\r\n    \"password\":\"111111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/rest/auth/newPass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"auth",
+						"newPass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add item and item details with user ID from token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImVzbWFpaWwiLCJzdWIiOiJhbGllc21haWlsOTRAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MSwiZXhwIjoxNzE2OTAyMjUzLCJpYXQiOjE3MTY5MDA0NTN9.EnPwsL1Y5jrbgMkykpRJ_47C0M6oJAl1FGvb2J_jwf8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"itemDetails\":{\r\n        \"description\": \"Going to the bootcamp\",\r\n        \"created_at\":\"2024-11-23\",\r\n        \"priority\":\"low\",\r\n        \"status\":\"completed\"\r\n    },\r\n \"item\": {\r\n        \"title\":\"Studying\"\r\n    }\r\n    \r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/rest/item",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"rest",
+						"item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get item using ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImVzbWFpaWwiLCJzdWIiOiJhbGllc21haWlsOTRAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MSwiZXhwIjoxNzE2OTAyMjUzLCJpYXQiOjE3MTY5MDA0NTN9.EnPwsL1Y5jrbgMkykpRJ_47C0M6oJAl1FGvb2J_jwf8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/rest/item?itemId=6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"rest",
+						"item"
+					],
+					"query": [
+						{
+							"key": "itemId",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update item with ID from token",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImVzbWFpaWwiLCJzdWIiOiJhbGllc21haWlsOTRAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MSwiZXhwIjoxNzE2OTAyMjUzLCJpYXQiOjE3MTY5MDA0NTN9.EnPwsL1Y5jrbgMkykpRJ_47C0M6oJAl1FGvb2J_jwf8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"itemDetails\":{\r\n        \"id\":1,\r\n        \"description\": \"Going to the club to play basketball\",\r\n        \"created_at\":\"2020-12-25\",\r\n        \"priority\":\"low\",\r\n        \"status\":\"not_completed\"\r\n    },\r\n \"item\": {\r\n        \"id\":1,\r\n        \"title\":\"basketball\"\r\n    }\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/rest/item",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"rest",
+						"item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an item with token",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbHkiLCJsYXN0TmFtZSI6ImVzbWFpaWwiLCJzdWIiOiJhbGllc21haWlsOTRAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MSwiZXhwIjoxNzE2OTAyMjUzLCJpYXQiOjE3MTY5MDA0NTN9.EnPwsL1Y5jrbgMkykpRJ_47C0M6oJAl1FGvb2J_jwf8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/rest/item?itemId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"rest",
+						"item"
+					],
+					"query": [
+						{
+							"key": "itemId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get userID from token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdE5hbWUiOiJhbGkiLCJsYXN0TmFtZSI6ImlzbWFpbCIsImlkIjoxLCJyb2xlIjoidXNlciIsInN1YiI6ImFsaWVzbWFpaWw5NEBnbWFpbC5jb20iLCJleHAiOjE3MTYxMDc1NTksImlhdCI6MTcxNjEwNTc1OX0.E1NUPg6bT_xdfvr1mpryZ9DxkX6PWP0laEU_j3nSAVk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/rest/item/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"rest",
+						"item",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
